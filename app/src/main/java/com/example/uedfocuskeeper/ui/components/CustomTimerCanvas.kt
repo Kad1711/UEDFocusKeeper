@@ -31,8 +31,8 @@ fun CustomTimerCanvas(
     val minutes = timeLeftInSeconds / 60
     val seconds = timeLeftInSeconds % 60
     val timeString = String.format("%02d:%02d", minutes, seconds)
-    val primaryColor = MaterialTheme.colorScheme.primary
-    val trackColor = Color.LightGray
+    val primaryColor = Color(0xFF0056A0)
+    val trackColor = Color(0xFFE1F5FE)
 
     Box(
         contentAlignment = Alignment.Center,

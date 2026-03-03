@@ -23,7 +23,6 @@ fun HistoryScreen(
     viewModel: HistoryViewModel,
     onNavigateBack: () -> Unit // Nút để quay lại màn hình đếm giờ
 ) {
-    // Thu thập dữ liệu từ ViewModel
     val allSessions by viewModel.allSessions.collectAsStateWithLifecycle(initialValue = emptyList())
     val last7DaysSessions by viewModel.last7DaysSessions.collectAsStateWithLifecycle(initialValue = emptyList())
 

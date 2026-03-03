@@ -73,7 +73,6 @@ class TimerViewModel(private val studySessionDao: StudySessionDao) : ViewModel()
     fun pauseTimer(context: Context) {
         _timerStatus.value = TimerStatus.PAUSED
 
-        // Gửi lệnh tắt Service
         val intent = Intent(context, TimerService::class.java).apply {
             action = "STOP"
         }
@@ -84,7 +83,6 @@ class TimerViewModel(private val studySessionDao: StudySessionDao) : ViewModel()
         _timerStatus.value = TimerStatus.IDLE
         _timeLeftInSeconds.value = _totalTimeInSeconds.value
 
-        // Gửi lệnh tắt Service
         val intent = Intent(context, TimerService::class.java).apply {
             action = "STOP"
         }

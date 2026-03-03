@@ -46,7 +46,6 @@ fun WeeklyChartCanvas(sessions: List<StudySession>, modifier: Modifier = Modifie
         Text("Thống kê 7 Ngày Qua (Phút)", fontWeight = FontWeight.Bold, fontSize = 16.sp)
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Vẽ Canvas
         Canvas(modifier = Modifier.fillMaxWidth().height(150.dp).padding(horizontal = 16.dp)) {
             val canvasWidth = size.width
             val canvasHeight = size.height
@@ -57,7 +56,7 @@ fun WeeklyChartCanvas(sessions: List<StudySession>, modifier: Modifier = Modifie
                 val (_, minutes) = entry
 
                 val barHeight = (minutes.toFloat() / maxMinutes) * canvasHeight
-                // Tính toán tọa độ X để đặt cột
+
                 val xOffset = index * (barWidth * 2) + barWidth / 2
 
                 drawRoundRect(

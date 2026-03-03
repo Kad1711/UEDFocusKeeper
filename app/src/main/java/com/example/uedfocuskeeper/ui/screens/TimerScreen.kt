@@ -16,12 +16,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.uedfocuskeeper.ui.components.CustomTimerCanvas
 import com.example.uedfocuskeeper.viewmodel.TimerStatus
 import com.example.uedfocuskeeper.viewmodel.TimerViewModel
-
+import androidx.compose.ui.graphics.Color
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimerScreen(
     viewModel: TimerViewModel,
-    onNavigateToHistory: () -> Unit // Đã bổ sung tham số này vào đây
+    onNavigateToHistory: () -> Unit
 ) {
     // Khai báo context ở ngay đầu hàm Composable
     val context = LocalContext.current
@@ -90,25 +90,29 @@ fun TimerScreen(
                     TimerStatus.IDLE, TimerStatus.PAUSED -> {
                         Button(
                             onClick = { viewModel.startTimer(context) },
-                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))
                         ) {
-                            Text("BẮT ĐẦU")
+                            Text("BẮT ĐẦU", color = Color.White)
                         }
                     }
                     TimerStatus.RUNNING -> {
                         Button(
                             onClick = { viewModel.pauseTimer(context) },
-                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107))
                         ) {
-                            Text("TẠM DỪNG")
+                            Text("TẠM DỪNG", color = Color.Black)
                         }
                     }
                 }
 
-                OutlinedButton(
-                    onClick = { viewModel.resetTimer(context) }
+                Button(
+                    onClick = { viewModel.resetTimer(context) },
+
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF44336))
                 ) {
-                    Text("HỦY", color = MaterialTheme.colorScheme.error)
+                    Text("HỦY", color = Color.White)
                 }
             }
         }

@@ -31,13 +31,11 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             UEDFocusKeeperTheme {
-                // 1. Khởi tạo NavController - "Người dẫn đường"
                 val navController = rememberNavController()
 
-                // 2. Thiết lập NavHost - "Bản đồ các màn hình"
                 NavHost(
                     navController = navController,
-                    startDestination = "timer_screen" // Màn hình xuất hiện đầu tiên
+                    startDestination = "timer_screen"
                 ) {
                     // Định nghĩa màn hình Đếm giờ
                     composable("timer_screen") {
@@ -47,12 +45,11 @@ class MainActivity : ComponentActivity() {
                         TimerScreen(
                             viewModel = timerViewModel,
                             onNavigateToHistory = {
-                                navController.navigate("history_screen") // Lệnh chuyển trang
+                                navController.navigate("history_screen")
                             }
                         )
                     }
 
-                    // Định nghĩa màn hình Lịch sử
                     composable("history_screen") {
                         val historyViewModel: HistoryViewModel = viewModel(
                             factory = HistoryViewModelFactory(dao)
@@ -60,7 +57,7 @@ class MainActivity : ComponentActivity() {
                         HistoryScreen(
                             viewModel = historyViewModel,
                             onNavigateBack = {
-                                navController.popBackStack() // Lệnh quay lại trang trước
+                                navController.popBackStack()
                             }
                         )
                     }
