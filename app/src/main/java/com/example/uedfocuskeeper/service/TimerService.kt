@@ -62,7 +62,7 @@ class TimerService : Service() {
                 notificationHelper.updateNotification("Đang tập trung $courseName: ${String.format("%02d:%02d", minutes, seconds)}")
             }
             isRunningFlow.value = false
-            notificationHelper.updateNotification("Phiên học hoàn tất: $courseName")
+            notificationHelper.showFinishedNotification(courseName)
             stopForeground(STOP_FOREGROUND_DETACH)
         }
     }

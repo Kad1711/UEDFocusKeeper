@@ -1,13 +1,15 @@
 package com.example.uedfocuskeeper.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.List // Đã đổi sang List để không bị lỗi thư viện
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -16,27 +18,52 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.uedfocuskeeper.ui.components.CustomTimerCanvas
 import com.example.uedfocuskeeper.viewmodel.TimerStatus
 import com.example.uedfocuskeeper.viewmodel.TimerViewModel
-import androidx.compose.ui.graphics.Color
+import kotlinx.coroutines.flow.collectLatest
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimerScreen(
     viewModel: TimerViewModel,
     onNavigateToHistory: () -> Unit
 ) {
-    // Khai báo context ở ngay đầu hàm Composable
     val context = LocalContext.current
+
+    var showDialog by remember { mutableStateOf(false) }
+    var dialogMessage by remember { mutableStateOf("") }
 
     val courseName by viewModel.courseName.collectAsStateWithLifecycle()
     val timeLeft by viewModel.timeLeftInSeconds.collectAsStateWithLifecycle()
     val totalTime by viewModel.totalTimeInSeconds.collectAsStateWithLifecycle()
     val status by viewModel.timerStatus.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        viewModel.finishEvent.collectLatest { message ->
+            dialogMessage = message
+            showDialog = true
+        }
+    }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("UED Focus Keeper", fontWeight = FontWeight.Bold) },
+            text = { Text(dialogMessage) },
+            confirmButton = {
+                Button(
+                    onClick = { showDialog = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))
+                ) {
+                    Text("Tuyệt vời!")
+                }
+            }
+        )
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("UED Focus Keeper", fontWeight = FontWeight.Bold) },
                 actions = {
-                    // Nút bấm chuyển sang màn hình Lịch sử
                     IconButton(onClick = onNavigateToHistory) {
                         Icon(Icons.Default.List, contentDescription = "Xem Lịch sử")
                     }
@@ -90,7 +117,6 @@ fun TimerScreen(
                     TimerStatus.IDLE, TimerStatus.PAUSED -> {
                         Button(
                             onClick = { viewModel.startTimer(context) },
-
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))
                         ) {
                             Text("BẮT ĐẦU", color = Color.White)
@@ -99,7 +125,6 @@ fun TimerScreen(
                     TimerStatus.RUNNING -> {
                         Button(
                             onClick = { viewModel.pauseTimer(context) },
-
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107))
                         ) {
                             Text("TẠM DỪNG", color = Color.Black)
@@ -109,7 +134,6 @@ fun TimerScreen(
 
                 Button(
                     onClick = { viewModel.resetTimer(context) },
-
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF44336))
                 ) {
                     Text("HỦY", color = Color.White)
