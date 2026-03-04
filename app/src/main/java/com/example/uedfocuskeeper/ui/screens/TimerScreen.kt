@@ -19,7 +19,8 @@ import com.example.uedfocuskeeper.ui.components.CustomTimerCanvas
 import com.example.uedfocuskeeper.viewmodel.TimerStatus
 import com.example.uedfocuskeeper.viewmodel.TimerViewModel
 import kotlinx.coroutines.flow.collectLatest
-
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimerScreen(
@@ -75,9 +76,10 @@ fun TimerScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(24.dp),
+                .padding(horizontal = 24.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             OutlinedTextField(
                 value = courseName,
